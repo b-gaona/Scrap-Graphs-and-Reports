@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d052fde4-e961-4ace-aaf3-dc3dc69d56f7">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="fecha_ini" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fecha_fin" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     FAs.`nombreFA` AS FAs_nombreFA,
+     empleados.`nombre` AS empleados_nombre,
+     registrosScrap.`nombreCausa` AS registrosScrap_nombreCausa,
+     registrosScrap.`numSerieProducto` AS registrosScrap_numSerieProducto,
+     registrosScrap.`opcion` AS registrosScrap_opcion,
+     registrosScrap.`posicion` AS registrosScrap_posicion,
+     registrosScrap.`zonaFA` AS registrosScrap_zonaFA,
+     registrosScrap.`pedestal` AS registrosScrap_pedestal,
+     registrosScrap.`numSerieHousing` AS registrosScrap_numSerieHousing,
+     registrosScrap.`numSeriePCB` AS registrosScrap_numSeriePCB,
+     registrosScrap.`estado` AS registrosScrap_estado,
+     registrosScrap.`fecha_causa` AS registrosScrap_fecha_causa,
+     registrosScrap.`columna_auxiliar` AS registrosScrap_columna_auxiliar
+FROM
+     `FAs` FAs INNER JOIN `empleados` empleados ON FAs.`idFA` = empleados.`idFA`
+     INNER JOIN `registrosScrap` registrosScrap ON empleados.`idempleado` = registrosScrap.`idempleado`
+WHERE registrosScrap.`columna_auxiliar` between #$P!{fecha_ini}# and #$P!{fecha_fin}#
+order by registrosScrap.`columna_auxiliar` ASC]]>
+	</queryString>
+	<field name="FAs_nombreFA" class="java.lang.String"/>
+	<field name="empleados_nombre" class="java.lang.String"/>
+	<field name="registrosScrap_nombreCausa" class="java.lang.String"/>
+	<field name="registrosScrap_numSerieProducto" class="java.lang.String"/>
+	<field name="registrosScrap_opcion" class="java.lang.String"/>
+	<field name="registrosScrap_posicion" class="java.lang.String"/>
+	<field name="registrosScrap_zonaFA" class="java.lang.String"/>
+	<field name="registrosScrap_pedestal" class="java.lang.String"/>
+	<field name="registrosScrap_numSerieHousing" class="java.lang.String"/>
+	<field name="registrosScrap_numSeriePCB" class="java.lang.String"/>
+	<field name="registrosScrap_estado" class="java.lang.Boolean"/>
+	<field name="registrosScrap_fecha_causa" class="java.lang.String"/>
+	<field name="registrosScrap_columna_auxiliar" class="java.sql.Timestamp"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="59" splitType="Stretch">
+			<staticText>
+				<reportElement x="365" y="0" width="100" height="38" uuid="b7a10ccc-b798-4b1f-b903-4f6641635ba8"/>
+				<textElement>
+					<font size="24"/>
+				</textElement>
+				<text><![CDATA[Reporte]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="100" y="38" width="120" height="20" uuid="0202221f-cbaf-4a55-b56b-10a5962665d5"/>
+				<textFieldExpression><![CDATA[$P{fecha_ini}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="38" width="100" height="20" uuid="8262f292-0e75-44cb-bc1d-285e20048c01"/>
+				<text><![CDATA[Datos colectados de: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="220" y="39" width="19" height="20" uuid="0b468f3a-31bb-4fb2-8e14-27bb795d709c"/>
+				<text><![CDATA[al:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="239" y="39" width="126" height="20" uuid="2eef3df3-39e4-4fbf-8622-c98266eb9c45"/>
+				<textFieldExpression><![CDATA[$P{fecha_fin}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="579" y="39" width="100" height="20" uuid="d1d9343d-5a94-4edb-b1e2-0dbf6b71439f"/>
+				<text><![CDATA[Reporte Total]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement isPrintRepeatedValues="false" x="678" y="10" width="191" height="20" uuid="9c4416c9-8fd2-4ad8-97f6-01d7f6940e9f"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="496" y="10" width="182" height="20" uuid="74b3b667-8928-4b26-9394-f552298c3b85"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Fecha de generación del reporte:]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="802" height="20" backcolor="#999999" uuid="c4be5444-ad06-4feb-a555-653aaaecaa3a"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" uuid="d4379404-fcd1-4342-a05e-1f57667f7830"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Causa]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="0" width="100" height="20" uuid="f4a7e315-4a9c-42e7-8ad2-5a83a0b36b73"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Técnico]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="0" width="30" height="20" uuid="8661c91c-0017-4f6b-963d-d3c1e329ef1e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[FA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="230" y="0" width="95" height="20" uuid="b10662df-c1b6-4b66-b50b-fd519206ccfb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Núm. Serie Producto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="325" y="0" width="50" height="20" uuid="421e4350-ecc3-4548-a4e8-8db9bd062285"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Opción]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="375" y="0" width="50" height="20" uuid="cd32f94d-f0bd-4d52-a935-5ffff3a3ba70"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Posición]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="425" y="0" width="30" height="20" uuid="2afeec67-a4b2-4d27-a904-17d27a06837b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Zona]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="455" y="0" width="75" height="20" uuid="8bd57f02-d578-4b04-bf80-42f9fba35c62"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Pedestal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="530" y="0" width="80" height="20" uuid="09b1464f-c2f2-4e4c-b568-349eb94de6dd"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Serie Housing]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="610" y="0" width="80" height="20" uuid="47eb8caf-9c0c-4b42-bfa1-3b364068c97c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Serie PCB]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="690" y="0" width="110" height="20" uuid="243da14a-fb1a-45d2-a60b-ea1f41afd628"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Fecha de registro]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="802" height="20" backcolor="#CCCCCC" uuid="a1d676ec-7c70-445f-8b96-e79bbf8c94cb"/>
+			</rectangle>
+			<textField>
+				<reportElement x="0" y="0" width="100" height="20" uuid="73ccd2a1-cdaa-465e-8cc1-dec1befe2daa"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{registrosScrap_nombreCausa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="100" height="20" uuid="cbd2a055-9ad9-41d1-8199-c1ef74f7e02d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{empleados_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="200" y="0" width="30" height="20" uuid="3c5deee8-b0c5-437b-be55-8e374e2f9903"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{FAs_nombreFA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="230" y="0" width="95" height="20" uuid="5e8525cf-8cdf-4371-b87a-a7160f0aaf63"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{registrosScrap_numSerieProducto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="325" y="0" width="50" height="20" uuid="bfbc7c8c-fa21-4729-9043-e945271e4db9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{registrosScrap_opcion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="375" y="0" width="50" height="20" uuid="340bd7ee-1964-4952-923a-415ee1bf45f2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{registrosScrap_posicion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="425" y="0" width="30" height="20" uuid="db283e38-2439-4014-a1bf-0e6bdf49ac7d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{registrosScrap_zonaFA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="455" y="0" width="75" height="20" uuid="22a204da-5949-4140-a184-fa22d7de78a0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{registrosScrap_pedestal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="530" y="0" width="80" height="20" uuid="8b49fd58-baaa-4423-b44a-187316fe20e6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{registrosScrap_numSerieHousing}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="610" y="0" width="80" height="20" uuid="a2523525-c316-4091-bff5-e95d7ac6776a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{registrosScrap_numSeriePCB}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="690" y="0" width="110" height="20" uuid="941321fd-e426-4e5b-8883-678746b0a499"/>
+				<textFieldExpression><![CDATA[$F{registrosScrap_fecha_causa}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="14" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="29" splitType="Stretch">
+			<textField>
+				<reportElement x="365" y="0" width="80" height="20" uuid="5cc3d450-c54f-4c18-b6d8-95bfb6cc4e83"/>
+				<textElement textAlignment="Right">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="445" y="0" width="40" height="20" uuid="3bf76ab0-149d-430a-b966-b46e5491c229"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="12" width="299" height="12" uuid="6e69c333-80d2-454d-803b-4a88694ca600"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[El formato de fecha de registro es MM/dd/yyyy.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="0" width="233" height="20" uuid="57ca31dd-b808-4e25-aa6d-c4a31aa15b3c"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[La palabra "null" significa que no hay datos en el campo]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="20" splitType="Stretch"/>
+	</summary>
+</jasperReport>

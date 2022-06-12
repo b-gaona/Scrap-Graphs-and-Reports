@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d052fde4-e961-4ace-aaf3-dc3dc69d56f7">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="666"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="fecha_ini" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fecha_fin" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="whereFA" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="whereZona" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     FAs.`nombreFA` AS FAs_nombreFA,
+     FAs.`numeroSerie` AS FAs_numeroSerie,
+     zonaFA.`nombreZona` AS zonaFA_nombreZona,
+     empleados.`nombre` AS empleados_nombre,
+     tareas.`nombreTarea` AS tareas_nombreTarea,
+     registros.`nombreCausa` AS registros_nombreCausa,
+     registros.`fecha_causa` AS registros_fecha_causa,
+     registros.`fecha_expiracion` AS registros_fecha_expiracion,
+     registros.`desperdicio` AS registros_desperdicio,
+     registros.`numlote` AS registros_numlote,
+     registros.`columna_auxiliar` AS registros_columna_auxiliar
+FROM
+     `empleados` empleados INNER JOIN `FAs` FAs ON empleados.`idFA` = FAs.`idFA`
+     INNER JOIN `zonaFA` zonaFA ON empleados.`idempleado` = zonaFA.`idempleado`
+     INNER JOIN `tareas` tareas ON zonaFA.`idZona` = tareas.`idZona`
+     INNER JOIN `registros` registros ON tareas.`idtarea` = registros.`idtarea`
+WHERE
+     registros.`columna_auxiliar` between #$P!{fecha_ini}# and #$P!{fecha_fin}#
+     and FAs.`nombreFA` LIKE '$P!{whereFA}'
+     and zonaFA.`nombreZona` LIKE '$P!{whereZona}'
+     and tareas.`nombreTarea` = 'Registrar Desperdicio Gel30'
+ORDER BY registros.`columna_auxiliar` ASC]]>
+	</queryString>
+	<field name="FAs_nombreFA" class="java.lang.String"/>
+	<field name="FAs_numeroSerie" class="java.lang.String"/>
+	<field name="zonaFA_nombreZona" class="java.lang.String"/>
+	<field name="empleados_nombre" class="java.lang.String"/>
+	<field name="tareas_nombreTarea" class="java.lang.String"/>
+	<field name="registros_nombreCausa" class="java.lang.String"/>
+	<field name="registros_fecha_causa" class="java.lang.String"/>
+	<field name="registros_fecha_expiracion" class="java.lang.String"/>
+	<field name="registros_desperdicio" class="java.lang.Double"/>
+	<field name="registros_numlote" class="java.lang.String"/>
+	<field name="registros_columna_auxiliar" class="java.sql.Timestamp"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="59" splitType="Stretch">
+			<staticText>
+				<reportElement x="365" y="0" width="100" height="38" uuid="b7a10ccc-b798-4b1f-b903-4f6641635ba8"/>
+				<textElement>
+					<font size="24"/>
+				</textElement>
+				<text><![CDATA[Reporte]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="488" y="10" width="182" height="20" uuid="01157195-2b33-4284-b52a-d3aa03e0b7d6"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Fecha de generación del reporte:]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="670" y="10" width="121" height="20" uuid="5256f988-fef8-426c-9138-b1bf1eb47a6b"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="49" y="39" width="37" height="20" uuid="aced6657-f85d-4331-a1cb-be0c043cea91"/>
+				<textFieldExpression><![CDATA[$P{whereFA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="105" y="39" width="37" height="20" uuid="6eb90b9b-e3d0-43c5-b38f-d64e98260224"/>
+				<textFieldExpression><![CDATA[$P{whereZona}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="86" y="39" width="19" height="20" uuid="d310f1db-323c-412e-979a-c611e169fd43"/>
+				<text><![CDATA[>]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="142" y="39" width="19" height="20" uuid="85fce7b3-acaa-426a-aefe-98a0a4a633dc"/>
+				<text><![CDATA[>]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="161" y="39" width="100" height="20" uuid="3aa88afc-8d87-4b5b-b85c-8a240f834f52"/>
+				<text><![CDATA[Desperdicio de Gel 30]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="261" y="39" width="19" height="20" uuid="56d8f790-80f5-4131-8925-73e80a8e5a76"/>
+				<text><![CDATA[>]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="280" y="39" width="100" height="20" uuid="bbf81124-f793-4b2a-a18c-8e789c5e1336"/>
+				<text><![CDATA[Todas las causas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="692" y="38" width="19" height="20" uuid="913c7d67-4e39-45ee-af13-4561e78a87db"/>
+				<text><![CDATA[al:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="711" y="38" width="126" height="20" uuid="4078459f-4130-4d48-9379-94ad73d2bb80"/>
+				<textFieldExpression><![CDATA[$P{fecha_fin}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="472" y="38" width="100" height="20" uuid="e48e1ced-9966-4efd-8d70-026231f5314e"/>
+				<text><![CDATA[Datos colectados de: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="572" y="38" width="120" height="20" uuid="05815e19-39b9-4d8f-8044-e2af1d80a372"/>
+				<textFieldExpression><![CDATA[$P{fecha_ini}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<rectangle>
+				<reportElement x="52" y="0" width="659" height="20" backcolor="#999999" uuid="70c4ae6e-32cb-418a-a441-907fb7f4d9c7"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="52" y="0" width="32" height="20" uuid="22f27993-6ec4-4809-b78a-26802ebab37d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[FA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="84" y="0" width="68" height="20" uuid="11fb2c46-3e1b-4ff3-bd3e-c6e2f7cc6a32"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Num. Serie]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="152" y="0" width="29" height="20" uuid="8a75f5b9-45de-45cf-ad66-268017faf637"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Zona]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="181" y="0" width="100" height="20" uuid="5f58a8ce-2e96-4c9a-b521-f66676344afb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Nombre del técnico]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="281" y="0" width="116" height="20" uuid="82d01683-11cb-43ee-98ef-1d3d1915960b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Tarea]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="397" y="0" width="120" height="20" uuid="fa9752c1-c71b-4dac-89d6-33365b1048ae"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Causa]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="517" y="0" width="126" height="20" uuid="06026c33-e93f-43be-befe-8e5e52ba989e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Fecha de registro]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="643" y="0" width="68" height="20" uuid="ef237500-80a5-4a29-a509-a9614fada358"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Desperdicio]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<rectangle>
+				<reportElement x="52" y="0" width="659" height="20" backcolor="#CCCCCC" uuid="b8cd9d09-1d53-4229-9893-2083c40c08f4"/>
+			</rectangle>
+			<textField>
+				<reportElement x="52" y="0" width="32" height="20" uuid="74b398eb-9fa0-4918-9885-12a09015ae6c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{FAs_nombreFA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="84" y="0" width="68" height="20" uuid="7c10d56f-bde9-46dd-89ab-aa39a40fedb0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{FAs_numeroSerie}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="152" y="0" width="29" height="20" uuid="4136c7ce-4dae-40f7-9e6a-b5ef98dfd2a7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{zonaFA_nombreZona}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="181" y="0" width="100" height="20" uuid="2d72e6b5-8eb6-4cb5-86a3-b372f0c98768"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{empleados_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="281" y="0" width="116" height="20" uuid="f293356b-2baf-4fb4-8dd5-83a2dafdf5dc"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{tareas_nombreTarea}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="397" y="0" width="120" height="20" uuid="28ad3edd-98fc-404f-9625-ba9cff907797"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{registros_nombreCausa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="517" y="0" width="126" height="20" uuid="f9b3c52a-7baf-4f6d-b21c-e14c2984bb5b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{registros_fecha_causa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="643" y="0" width="68" height="20" uuid="e4cabd68-dbf2-447f-bbe6-1d428aae2400"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{registros_desperdicio}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="14" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="29" splitType="Stretch">
+			<textField>
+				<reportElement x="365" y="0" width="80" height="20" uuid="5cc3d450-c54f-4c18-b6d8-95bfb6cc4e83"/>
+				<textElement textAlignment="Right">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="445" y="0" width="40" height="20" uuid="3bf76ab0-149d-430a-b966-b46e5491c229"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="15" y="12" width="299" height="12" uuid="56104afb-08ec-4683-b8e2-8ec5d4c80dec"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[El formato de fecha de registro es MM/dd/yyyy.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="0" width="299" height="12" uuid="a82fab29-34b8-4646-94f9-d010eb726e2c"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[* significa que el filtro de registros es todas las zonas o todas las FA.]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="20" splitType="Stretch"/>
+	</summary>
+</jasperReport>
